@@ -11,15 +11,23 @@ public class MultiplayerHandler : MonoBehaviour
     public bool multiplayer;
     public string FileDataPath;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     void GPU(string txt)
     {
         Debug.Log(txt);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        try {
+            using var file = File.CreateText(FileDataPath);
+            file.WriteLine(multiplayer.ToString());
+            file.Close();
+        } catch (Exception ex) {
+            GPU("Sorry! Error there");
+            multiplayer = false;
+            Thread.Sleep(1000 * 10);
+        }
     }
 
     // Update is called once per frame
